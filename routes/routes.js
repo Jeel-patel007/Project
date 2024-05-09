@@ -1,13 +1,10 @@
 import express from 'express';
-import { bookAdd } from '../controllers/postController.js';
+import { bookAdd, fetchPosts, showPosts } from '../controllers/postController.js';
 
 const router = express.Router();
 
-console.log('inside routes');
-router.get("/postAdd", (req, res) => {
-  console.log('inside route')
-  res.render('index.ejs');
-});
+router.get("/", showPosts)
 router.post('/addBook', bookAdd);
+router.get("/posts", fetchPosts);
 
 export default router;
