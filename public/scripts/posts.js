@@ -12,6 +12,7 @@ const handlePosts = (data) => {
   let postContainer = document.getElementById('container');
   let posts = " ";
   console.log(data)
+
   data.result.forEach((element) => {
     posts += ` <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-10">
         <a href="#">
