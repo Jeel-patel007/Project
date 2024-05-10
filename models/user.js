@@ -25,4 +25,5 @@ User.init({
   modelName: 'User',
 });
 
+// User.associate(Model);
 export default User;
