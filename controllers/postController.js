@@ -1,25 +1,21 @@
-import { Op } from "sequelize";
+import { Op, where } from "sequelize";
 import { book } from "../models/books.js";
-import { Sequelize, DataTypes } from "sequelize";
 import project from "../models/project.js";
 import User from "../models/user.js";
-
-// import db from "../models/index.js";
-// const project = Sequelize['import'](path.join(__dirname, '../models/project.js'))
+import Post from "../models/posts.js";
 
 
-// const project = db.import('./path/to/models/project');
-
-export const bookAdd = (req, res) => {
+export const addPost = (req, res) => {
   try {
     const data = req.body;
-    console.log(req.body)
-    book.create(data)
+    console.log(data);
+    Post.create(data)
       .then(() => {
         res.status(200)
-          .json({ success: true, message: 'book added' });
+          .json({ success: true, message: 'Post added' });
       })
   } catch (error) {
+    console.log(error);
     res.status(400)
       .json({ success: false, message: 'Something Went Wrong' });
   }
@@ -31,7 +27,7 @@ export const showPosts = (req, res) => {
 
 export const fetchPosts = async (req, res) => {
   try {
-    const posts = await book.findAll();
+    const posts = await Post.findAll();
     res.status(200).json({ success: true, result: posts });
   } catch (error) {
     res.status(400).json({ success: false, message: 'Something Went Wrong' });
@@ -50,20 +46,66 @@ export const searchPost = async (req, res) => {
     //   },
     // });
     // console.log('inside');
-    User.hasOne(project);
-    project.belongsTo(User, {
-      foreignKey: 'user_id'
-    });
+    // User.hasOne(project);
+    // project.belongsTo(User, {
+    //   foreignKey: 'user_id',
+    // });
+    User.associate({ project });
+    project.associate({ User });
     const result = await User.findAll({
       include: [{
         model: project,
+        required: true
       }]
     });
-    // const result = await User.findOne();
-    console.log(result);
+    // const User = db.User;
+    // const result = await User.findByPk(3);
     res.status(200).json({ success: true, result: result });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: 'Something Went Wrong' });
+  }
+}
+
+export const updatePost = async (req, res) => {
+  try {
+    // const data = req.body;
+    const result = await User.update(
+      { lastName: 'patel' },
+      {
+        where: {
+          id: 1
+        },
+      }
+    );
+    if (result) {
+      res.status(200).json({ success: true, message: 'Data Updated' })
+    } else {
+      res.status(400).json({ success: false, message: 'Something Went Wrong' })
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ success: false, message: 'Something Went Wrong' })
+  }
+}
+
+export const deletePost = async (req, res) => {
+  try {
+    const { id } = req.body
+    console.log(id);
+    let result = await Post.destroy({
+      where: {
+        id: id
+      }
+    });
+    console.log('result', result);
+    if (result) {
+      res.status(200).json({ success: true, message: 'post deleted' })
+    } else {
+      res.status(400).json({ success: false, message: 'Unable to delete record' })
+    }
+  } catch (error) {
+    console.log(error);
+    res.send(400).json({ success: false, message: 'Something Went Wrong' })
   }
 }

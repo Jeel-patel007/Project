@@ -2,7 +2,6 @@
 import { DataTypes, Model } from 'sequelize';
 // const sequelize = new Sequelize('sqlite::memory:');
 import { sequelize } from '../config/connection.js';
-import User from './user.js';
 
 class project extends Model {
   /**
@@ -10,22 +9,22 @@ class project extends Model {
    * This method is not a part of Sequelize lifecycle.
    * The `models/index` file will call this method automatically.
    */
-  // static associate(models) {
-  //   project.belongsTo(models.user, {
-  //     as: 'created-by-user',
-  //     foreignKey: 'id'
-  //   })
-  // }
+  static associate = (models) => {
+    project.belongsTo(models.User, {
+      foreignKey: 'userId'
+    })
+  }
 }
 
 project.init({
   name: DataTypes.STRING,
   description: DataTypes.STRING,
-  user_id: DataTypes.INTEGER
+  userId: DataTypes.INTEGER
 }, {
   sequelize,
   modelName: 'project',
 });
+
 
 
 export default project;

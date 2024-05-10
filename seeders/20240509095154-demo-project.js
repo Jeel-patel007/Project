@@ -15,7 +15,7 @@ module.exports = {
     return queryInterface.bulkInsert('projects', [{
       name: 'demo-project',
       description: 'first-project',
-      user_id: 1,
+      userId: 1,
       createdAt: '2020-09-09',
       updatedAt: '2020-08-23',
     }])
