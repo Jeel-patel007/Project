@@ -8,6 +8,7 @@ const getPosts = async () => {
 }
 
 getPosts();
+{/* <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${element.author}</p> */ }
 
 const showPosts = (data) => {
   console.log(data)
@@ -21,8 +22,7 @@ const showPosts = (data) => {
             <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${element.title}</h5>
             </a>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${element.author}</p>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${element.subject}</p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${element.description}</p>
             <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Read more
                  <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -42,11 +42,11 @@ const handlePost = () => {
       <form class="space-y-6" id="postForm" >
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">Post</h5>
           <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+              <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
               <input type="text" name="title" id="title" class="require bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"/>
           </div>
           <div>
-              <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+              <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
               <input type="text" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"/>
           </div>
          
@@ -68,7 +68,7 @@ const handlePostData = async () => {
     let data = new FormData(formData);
     const params = new URLSearchParams(data);
     data = await new Response(params).text();
-    const result = await fetch('/addBook', {
+    const result = await fetch('/addPost', {
       method: "POST",
       headers: {
         "Content-type": "application/x-www-form-urlencoded"
@@ -78,6 +78,9 @@ const handlePostData = async () => {
 
     if (result.status == 200) {
       console.log('post added');
+      setTimeout(() => {
+        window.location.href = `http://localhost:3000/`;
+      }, 2000)
     } else {
       console.log('something went wrong !!');
     }

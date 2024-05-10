@@ -4,7 +4,8 @@ import project from "../models/project.js";
 import User from "../models/user.js";
 import Post from "../models/posts.js";
 
-export const bookAdd = (req, res) => {
+
+export const addPost = (req, res) => {
   try {
     const data = req.body;
     console.log(data);
@@ -26,7 +27,7 @@ export const showPosts = (req, res) => {
 
 export const fetchPosts = async (req, res) => {
   try {
-    const posts = await book.findAll();
+    const posts = await Post.findAll();
     res.status(200).json({ success: true, result: posts });
   } catch (error) {
     res.status(400).json({ success: false, message: 'Something Went Wrong' });
@@ -47,16 +48,18 @@ export const searchPost = async (req, res) => {
     // console.log('inside');
     // User.hasOne(project);
     // project.belongsTo(User, {
-    //   foreignKey: 'user_id'
+    //   foreignKey: 'user_id',
     // });
-    // const result = await User.findAll({
-    //   include: [{
-    //     model: project,
-    //   }]
-    // });
+    User.associate({ project });
+    project.associate({ User });
+    const result = await User.findAll({
+      include: [{
+        model: project,
+        required: true
+      }]
+    });
     // const User = db.User;
-    const result = await User.findOne();
-    console.log(result);
+    // const result = await User.findByPk(3);
     res.status(200).json({ success: true, result: result });
   } catch (error) {
     console.log(error);
@@ -66,6 +69,7 @@ export const searchPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   try {
+    // const data = req.body;
     const result = await User.update(
       { lastName: 'patel' },
       {
@@ -82,5 +86,26 @@ export const updatePost = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: 'Something Went Wrong' })
+  }
+}
+
+export const deletePost = async (req, res) => {
+  try {
+    const { id } = req.body
+    console.log(id);
+    let result = await Post.destroy({
+      where: {
+        id: id
+      }
+    });
+    console.log('result', result);
+    if (result) {
+      res.status(200).json({ success: true, message: 'post deleted' })
+    } else {
+      res.status(400).json({ success: false, message: 'Unable to delete record' })
+    }
+  } catch (error) {
+    console.log(error);
+    res.send(400).json({ success: false, message: 'Something Went Wrong' })
   }
 }

@@ -2,7 +2,6 @@
 import { DataTypes, Model } from 'sequelize';
 // const sequelize = new Sequelize('sqlite::memory:');
 import { sequelize } from '../config/connection.js';
-
 class User extends Model {
   /**
    * Helper method for defining associations.
@@ -10,10 +9,7 @@ class User extends Model {
    * The `models/index` file will call this method automatically.
    */
   static associate(models) {
-    User.hasMany(models.project, {
-      as: 'project',
-      foreignKey: 'id'
-    })
+    User.hasMany(models.project)
   }
 }
 User.init({
@@ -25,5 +21,6 @@ User.init({
   modelName: 'User',
 });
 
+// User.hasMany(project);
 // User.associate(Model);
 export default User;

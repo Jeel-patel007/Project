@@ -14,6 +14,8 @@ Post.init({
 },
   {
     sequelize,
+    paranoid: true,
+    deletedAt: 'destroyTime',
     modelName: 'Post'
   }
 );
