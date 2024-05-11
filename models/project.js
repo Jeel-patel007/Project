@@ -19,12 +19,10 @@ class project extends Model {
 project.init({
   name: DataTypes.STRING,
   description: DataTypes.STRING,
-  userId: DataTypes.INTEGER
+  userId: DataTypes.INTEGER,
 }, {
   sequelize,
   modelName: 'project',
 });
-
-
 
 export default project;

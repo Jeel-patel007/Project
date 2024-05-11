@@ -1,7 +1,5 @@
 'use strict';
 
-const { DataTypes } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,12 +9,17 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return await queryInterface.addColumn('projects',
-      'start_date',
-      {
-        type: DataTypes.DATE,
+    return await queryInterface.createTable('garages', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      name: {
+        type: Sequelize.STRING,
         allowNull: false
-      })
+      }
+    })
   },
 
   async down(queryInterface, Sequelize) {
@@ -26,6 +29,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    return await queryInterface.dropTable('users')
+    return await queryInterface.dropTable('garages');
   }
 };
