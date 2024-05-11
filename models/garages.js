@@ -9,7 +9,10 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-
+      // console.log(models);
+      // garages.belongsToMany(models.owner_table, {
+      //   through: models.garage_pivot
+      // });
     }
   }
   garages.init({

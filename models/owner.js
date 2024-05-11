@@ -8,6 +8,9 @@ export const owner = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // owner.belongsToMany(models.garage_table, {
+      //   through: models.garage_pivot
+      // });
     }
   }
   owner.init({

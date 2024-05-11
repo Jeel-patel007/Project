@@ -31,31 +31,22 @@ export const fetchPosts = async (req, res) => {
 
 export const searchPost = async (req, res) => {
   try {
-    // const data = 'think';
-    // const result = await book.findAll({
-    //   attributes: ['id', 'title', [Sequelize.col('subject'), 'description']],
-    //   where: {
-    //     title: {
-    //       [Op.like]: `%${data}%`,
-    //     },
-    //   },
+    const project = db.project;
+    // const result = await db.User.findAll({
+    //   include: project
     // });
-    // console.log('inside');
-    // User.hasOne(project);
-    // project.belongsTo(User, {
-    //   foreignKey: 'user_id',
-    // });
-    // User.associate({ project });
-    // project.associate({ User });
-    // const result = await User.findAll({
-    //   include: [{
-    //     model: project,
-    //     required: true
-    //   }]
-    // });
-    // console.log(db);
-    const result = await db.garage.findAll();
+    // console.log(result.getProject());
+    // const result = await db.garage.findAll();
     // const result = await db.owner.create({});
+    const result = await db.garage.findAll({
+      include: [{
+        model: db.owner,
+        through: {
+          model: db.garage_pivot
+        }
+      }
+      ]
+    })
     res.status(200).json({ success: true, result: result });
   } catch (error) {
     console.log(error);
