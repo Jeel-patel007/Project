@@ -1,15 +1,10 @@
-import { Op, where } from "sequelize";
-import { book } from "../models/books.js";
-import project from "../models/project.js";
-import User from "../models/user.js";
-import Post from "../models/posts.js";
-
+import db from "../models/index.js";
 
 export const addPost = (req, res) => {
   try {
     const data = req.body;
     console.log(data);
-    Post.create(data)
+    db.Post.create(data)
       .then(() => {
         res.status(200)
           .json({ success: true, message: 'Post added' });
@@ -27,7 +22,7 @@ export const showPosts = (req, res) => {
 
 export const fetchPosts = async (req, res) => {
   try {
-    const posts = await Post.findAll();
+    const posts = await db.Post.findAll();
     res.status(200).json({ success: true, result: posts });
   } catch (error) {
     res.status(400).json({ success: false, message: 'Something Went Wrong' });
@@ -36,30 +31,22 @@ export const fetchPosts = async (req, res) => {
 
 export const searchPost = async (req, res) => {
   try {
-    // const data = 'think';
-    // const result = await book.findAll({
-    //   attributes: ['id', 'title', [Sequelize.col('subject'), 'description']],
-    //   where: {
-    //     title: {
-    //       [Op.like]: `%${data}%`,
-    //     },
-    //   },
+    const project = db.project;
+    // const result = await db.User.findAll({
+    //   include: project
     // });
-    // console.log('inside');
-    // User.hasOne(project);
-    // project.belongsTo(User, {
-    //   foreignKey: 'user_id',
-    // });
-    User.associate({ project });
-    project.associate({ User });
-    const result = await User.findAll({
+    // console.log(result.getProject());
+    // const result = await db.garage.findAll();
+    // const result = await db.owner.create({});
+    const result = await db.garage.findAll({
       include: [{
-        model: project,
-        required: true
-      }]
-    });
-    // const User = db.User;
-    // const result = await User.findByPk(3);
+        model: db.owner,
+        through: {
+          model: db.garage_pivot
+        }
+      }
+      ]
+    })
     res.status(200).json({ success: true, result: result });
   } catch (error) {
     console.log(error);
@@ -70,7 +57,7 @@ export const searchPost = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     // const data = req.body;
-    const result = await User.update(
+    const result = await db.User.update(
       { lastName: 'patel' },
       {
         where: {
@@ -93,7 +80,7 @@ export const deletePost = async (req, res) => {
   try {
     const { id } = req.body
     console.log(id);
-    let result = await Post.destroy({
+    let result = await db.Post.destroy({
       where: {
         id: id
       }

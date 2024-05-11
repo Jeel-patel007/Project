@@ -1,11 +1,12 @@
 import { Sequelize } from 'sequelize';
-
+import { config } from 'dotenv';
+config()
 export const sequelize = new Sequelize(
-  'project_advance',
-  'root',
-  'root_123',
+  process.env.database,
+  process.env.username,
+  process.env.password,
   {
-    host: '127.0.0.1',
+    host: process.env.host,
     dialect: 'mysql'
   }
 );
