@@ -1,33 +1,25 @@
 {
-  "name": "project",
+  "name": "sequelize_with_migration",
   "version": "1.0.0",
-  "description": "-- contributor : \"jeel-patel\"",
+  "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jeel-patel007/Project.git"
-  },
   "type": "module",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jeel-patel007/Project/issues"
-  },
-  "homepage": "https://github.com/Jeel-patel007/Project#readme",
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "babel-register": "^6.26.0",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^4.19.2",
     "mysql2": "^3.9.7",
+    "node": "^20.13.1",
     "nodemon": "^3.1.0",
     "sequelize": "^6.37.3",
-    "tailwind": "^4.0.0"
-  },
-  "devDependencies": {
-    "babel-register": "^6.26.0"
+    "sequelize-cli": "^6.6.2"
   }
 }
