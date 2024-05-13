@@ -1,10 +1,15 @@
 import db from "../models/index.js";
+// import Post from "../models/posts.js"
+// import garage from "../models/garages.js";
+// import owner from "../models/owner.js";
+// import garage_pivot from "../models/owner_has_garages.js";
+// import demo from "../models/demo";
 
 export const addPost = (req, res) => {
   try {
     const data = req.body;
     console.log(data);
-    db.Post.create(data)
+    Post.create(data)
       .then(() => {
         res.status(200)
           .json({ success: true, message: 'Post added' });
@@ -31,12 +36,12 @@ export const fetchPosts = async (req, res) => {
 
 export const searchPost = async (req, res) => {
   try {
-    const project = db.project;
+    // const project = db.project;
     // const result = await db.User.findAll({
     //   include: project
     // });
     // console.log(result.getProject());
-    // const result = await db.garage.findAll();
+    // const result = await demo.findAll();
     // const result = await db.owner.create({});
     const result = await db.garage.findAll({
       include: [{
