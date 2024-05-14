@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      console.log(models);
+
       garages.belongsToMany(models.owner, {
         through: models.owner_has_garages
       });

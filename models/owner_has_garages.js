@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      console.log(models);
+      // console.log(models);
       // console.log(models.garage_table);
       // owner_has_garages.hasMany(models.garage_table, {
       //   foreignKey: 'garage_id'
